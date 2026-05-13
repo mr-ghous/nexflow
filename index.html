@@ -4,17 +4,33 @@
   <title>NexFlow</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-
   <div class="container">
-    <h1>NexFlow</h1>
-    <p>Freelancer Income Optimizer</p>
 
-    <input id="amount" type="number" placeholder="Enter Project Amount">
-    
-    <button onclick="calculate()">Calculate</button>
+    <h1>💰 NexFlow</h1>
+    <p>Freelancer Income Intelligence System</p>
 
-    <h2 id="result"></h2>
+    <input id="amount" type="number" placeholder="Enter Project Amount ($)">
+
+    <select id="platform">
+      <option value="upwork">Upwork</option>
+      <option value="fiverr">Fiverr</option>
+      <option value="freelancer">Freelancer.com</option>
+      <option value="direct">Direct Client</option>
+    </select>
+
+    <select id="country">
+      <option value="pk">Pakistan</option>
+      <option value="in">India</option>
+      <option value="us">USA</option>
+      <option value="global">Other</option>
+    </select>
+
+    <button onclick="calculate()">Analyze Income</button>
+
+    <div id="result"></div>
+
   </div>
 
   <script src="script.js"></script>

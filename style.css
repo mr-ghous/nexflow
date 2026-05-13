@@ -1,29 +1,42 @@
 body {
   font-family: Arial;
-  background: #0f172a;
+  background: #0b1220;
   color: white;
   text-align: center;
-  padding: 50px;
+  padding: 40px;
 }
 
 .container {
-  background: #1e293b;
-  padding: 30px;
-  border-radius: 12px;
-  width: 300px;
+  max-width: 420px;
   margin: auto;
+  background: #111a2e;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
-input {
-  padding: 10px;
-  width: 90%;
+input, select {
+  width: 100%;
+  padding: 12px;
   margin: 10px 0;
+  border-radius: 8px;
+  border: none;
 }
 
 button {
-  padding: 10px;
   width: 100%;
+  padding: 12px;
   background: #38bdf8;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+}
+
+#result {
+  margin-top: 20px;
+  text-align: left;
+  background: #0f1b33;
+  padding: 15px;
+  border-radius: 10px;
 }

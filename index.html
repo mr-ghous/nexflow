@@ -1,37 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>NexFlow</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compound Interest Calculator | Grow Your Wealth Intelligently</title>
+  <meta name="description" content="Visualize the power of compound interest. Enter your investment details and watch your future wealth unfold in real time — clean, fast, and beautifully designed." />
+  <meta name="keywords" content="compound interest calculator, investment calculator, wealth growth, financial planning tool" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <div class="container">
 
-    <h1>💰 NexFlow</h1>
-    <p>Freelancer Income Intelligence System</p>
-
-    <input id="amount" type="number" placeholder="Enter Project Amount ($)">
-
-    <select id="platform">
-      <option value="upwork">Upwork</option>
-      <option value="fiverr">Fiverr</option>
-      <option value="freelancer">Freelancer.com</option>
-      <option value="direct">Direct Client</option>
-    </select>
-
-    <select id="country">
-      <option value="pk">Pakistan</option>
-      <option value="in">India</option>
-      <option value="us">USA</option>
-      <option value="global">Other</option>
-    </select>
-
-    <button onclick="calculate()">Analyze Income</button>
-
-    <div id="result"></div>
-
+  <!-- Ambient background blobs -->
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="grid-overlay"></div>
   </div>
+
+  <main class="page-wrapper">
+
+    <!-- ── HERO ── -->
+    <header class="hero">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Compound Intelligence
+      </div>
+      <h1 class="hero-title">
+        Watch Your <span class="gradient-text">Wealth</span><br />
+        Multiply Over Time
+      </h1>
+      <p class="hero-sub">
+        Enter your numbers below and discover the exponential force<br class="br-desktop" />
+        that separates the wealthy from everyone else.
+      </p>
+    </header>
+
+    <!-- ── CALCULATOR CARD ── -->
+    <section class="calc-card glass" aria-label="Compound Interest Calculator">
+
+      <div class="inputs-grid">
+
+        <div class="field-group">
+          <label for="principal">Initial Investment</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input id="principal" type="number" min="0" placeholder="10,000" value="10000" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="monthly">Monthly Contribution</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input id="monthly" type="number" min="0" placeholder="500" value="500" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="rate">Annual Interest Rate</label>
+          <div class="input-wrap">
+            <input id="rate" type="number" min="0" max="100" step="0.1" placeholder="8" value="8" />
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="years">Time Period</label>
+          <div class="input-wrap">
+            <input id="years" type="number" min="1" max="100" placeholder="20" value="20" />
+            <span class="input-suffix">yrs</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Compound frequency -->
+      <div class="freq-row">
+        <span class="freq-label">Compounds</span>
+        <div class="freq-pills" role="group" aria-label="Compounding frequency">
+          <button class="pill" data-freq="12" aria-pressed="true">Monthly</button>
+          <button class="pill" data-freq="4">Quarterly</button>
+          <button class="pill" data-freq="1">Yearly</button>
+        </div>
+      </div>
+
+      <button id="calc-btn" class="calc-btn" type="button">
+        <span class="btn-text">Calculate Growth</span>
+        <span class="btn-loader" aria-hidden="true"></span>
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+    </section>
+
+    <!-- ── RESULTS ── -->
+    <section class="results-section" id="results" aria-live="polite" aria-label="Calculation results">
+
+      <div class="results-grid">
+
+        <article class="result-card glass card-total-invested">
+          <div class="card-icon">💼</div>
+          <div class="card-label">Total Invested</div>
+          <div class="card-value" id="res-invested">—</div>
+        </article>
+
+        <article class="result-card glass card-interest card-featured">
+          <div class="card-glow" aria-hidden="true"></div>
+          <div class="card-icon">⚡</div>
+          <div class="card-label">Interest Earned</div>
+          <div class="card-value" id="res-interest">—</div>
+          <div class="card-sub" id="res-multiplier"></div>
+        </article>
+
+        <article class="result-card glass card-balance">
+          <div class="card-icon">🏦</div>
+          <div class="card-label">Final Balance</div>
+          <div class="card-value" id="res-balance">—</div>
+        </article>
+
+      </div>
+
+      <!-- Insight banner -->
+      <div class="insight-banner glass" id="insight-banner">
+        <div class="insight-icon">✦</div>
+        <p class="insight-text" id="insight-text"></p>
+      </div>
+
+      <!-- Progress bar: invested vs interest -->
+      <div class="breakdown-bar-wrap glass" id="breakdown-bar-wrap">
+        <div class="bb-labels">
+          <span><span class="dot dot-invested"></span> Invested</span>
+          <span><span class="dot dot-interest"></span> Interest</span>
+        </div>
+        <div class="breakdown-bar" role="img" aria-label="Investment breakdown bar">
+          <div class="bb-segment bb-invested" id="bb-invested"></div>
+          <div class="bb-segment bb-interest" id="bb-interest"></div>
+        </div>
+        <div class="bb-pcts">
+          <span id="bb-invested-pct">—</span>
+          <span id="bb-interest-pct">—</span>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="page-footer">
+      <p>Results are estimates for educational purposes only. Past performance doesn't guarantee future returns.</p>
+    </footer>
+
+  </main>
 
   <script src="script.js"></script>
 </body>
